@@ -26,7 +26,7 @@ namespace AltaSPDBZ.Modelo
 
         public override string ToString()
         {
-            return string.Format("ID: {0}\t\tNombre: {1}", IdLuchador, Nombre);
+            return string.Format("ID: {0}\t\tNombre: {1}\tTecnicas: {2}", IdLuchador, Nombre, Tecnicas.Count);
         }
     }
 }

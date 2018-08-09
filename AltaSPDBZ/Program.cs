@@ -16,40 +16,49 @@ namespace AltaSPDBZ
         static void menuConsola(IDAO dao)
         {
             Opciones opcion;
-
             do
             {
-                Console.Clear();
-                Console.WriteLine("1) Alta Luchador");
-                Console.WriteLine("2) Alta Tecnica");
-                Console.WriteLine("3) Ver Tecnicas");
-                Console.WriteLine("4) Ver poder total (calculo por DAO)");
-                Console.WriteLine("5) Salir");
-                Console.Write("\nSeleccionar opción: ");
+                mostrarMenu();
                 opcion = leerOpcion();
                 Console.Clear();
-                switch (opcion)
-                {
-                    case Opciones.AltaLuchador:
-                        dao.altaLuchador(promptLuchador());
-                        break;
-                    case Opciones.AltaTecnica:
-                        dao.altaTecnica(promptTecnica());
-                        break;
-                    case Opciones.VerTecnicas:
-                        imprimirTecnicas(dao.traerTecnicas());
-                        break;
-                    case Opciones.VerPoderTotal:
-                        promptLuchadorPoderTotal(dao);
-                        break;
-                    case Opciones.Salir:
-                        break;
-                    default:
-                        break;
-                }
+                delegarSubMenu(dao, opcion);
             } while (opcion != Opciones.Salir);
             Console.WriteLine("Adios, que la fuerza te acompañe");
             Console.ReadLine();
+        }
+
+        private static void mostrarMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("1) Alta Luchador");
+            Console.WriteLine("2) Alta Tecnica");
+            Console.WriteLine("3) Ver Tecnicas");
+            Console.WriteLine("4) Ver poder total (calculo por DAO)");
+            Console.WriteLine("5) Salir");
+            Console.Write("\nSeleccionar opción: ");
+        }
+
+        private static void delegarSubMenu(IDAO dao, Opciones opcion)
+        {
+            switch (opcion)
+            {
+                case Opciones.AltaLuchador:
+                    dao.altaLuchador(promptLuchador());
+                    break;
+                case Opciones.AltaTecnica:
+                    dao.altaTecnica(promptTecnica());
+                    break;
+                case Opciones.VerTecnicas:
+                    imprimirTecnicas(dao.traerTecnicas());
+                    break;
+                case Opciones.VerPoderTotal:
+                    promptLuchadorPoderTotal(dao);
+                    break;
+                case Opciones.Salir:
+                    break;
+                default:
+                    break;
+            }
         }
 
         private static Opciones leerOpcion()

@@ -56,8 +56,12 @@ namespace AltaSPDBZ.BD
 
         private DataTable traerTablaDeQuery(string query)
         {
+            //Instancio una tabla
             DataTable tabla = new DataTable();
+            //Reinstancio el adaptador, pasando como parametros
+            //al constructor, la query y la conexion
             adaptador = new MySqlDataAdapter(query, conexion);
+            //'le pido' al adaptador, que complete la tabla
             adaptador.Fill(tabla);
             return tabla;
         }
@@ -124,8 +128,7 @@ namespace AltaSPDBZ.BD
 
         private Tecnica obtenerTecnicaDeFila(DataRow fila)
         {
-            Tecnica tecnica;
-            tecnica = new Tecnica();
+            Tecnica tecnica = new Tecnica();
             tecnica.IdTecnica = Convert.ToUInt32(fila["idTecnica"]);
             tecnica.Nombre = fila["nombre"].ToString();
             tecnica.Poder = Convert.ToUInt16(fila["poder"]);
