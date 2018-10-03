@@ -5,7 +5,7 @@ namespace AltaSPDBZ.Modelo
 {
     class Luchador
     {
-        public UInt32 IdLuchador { get; set; }
+        public UInt32? IdLuchador { get; set; }
         public string Nombre { get; set; }
         public UInt32 PoderDePelea { get; set; }
         public List<Tecnica> Tecnicas { get; set; }

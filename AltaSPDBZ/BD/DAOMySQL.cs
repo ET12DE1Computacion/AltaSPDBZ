@@ -24,8 +24,10 @@ namespace AltaSPDBZ.BD
 
             cargarParametro("unNombre", MySqlDbType.VarChar, 45, tecnica.Nombre);
             cargarParametro("unPoder", MySqlDbType.UInt16, tecnica.Poder);
-
+            cargarParametro("idGenerado", MySqlDbType.UInt32, DBNull.Value);
+            setearComoSalida("idGenerado");
             ejecutarComando();
+            tecnica.IdTecnica = Convert.ToUInt32(comando.Parameters["idGenerado"].Value);
         }
 
         private void cargarParametro(string nombre, MySqlDbType tipoDb, object valor)
@@ -141,8 +143,8 @@ namespace AltaSPDBZ.BD
 
             cargarParametro("unNombre", MySqlDbType.VarChar, 45, luchador.Nombre);
             cargarParametro("poderDePelea", MySqlDbType.UInt24, luchador.PoderDePelea);
-            cargarParametro("unIdLuchador", MySqlDbType.UInt32, luchador.IdLuchador);
-            setearComoSalida("unIdLuchador");
+            cargarParametro("idGenerado", MySqlDbType.UInt32, DBNull.Value);
+            setearComoSalida("idGenerado");
             ejecutarComando();
         }
 

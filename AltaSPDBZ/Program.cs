@@ -24,7 +24,7 @@ namespace AltaSPDBZ
                 delegarSubMenu(dao, opcion);
             } while (opcion != Opciones.Salir);
             Console.WriteLine("Adios, que la fuerza te acompañe");
-            Console.ReadLine();
+            Console.ReadKey();
         }
 
         private static void mostrarMenu()
@@ -69,7 +69,7 @@ namespace AltaSPDBZ
         static DAOMySQL ingresoBDMySQL()
         {
             string host = prompt("Ingrese Host: ");
-            string db = "agbd5to_dbz";
+            string db = "agbd5to_dragonballz";
             string user = prompt("Ingrese Usuario: ");
             string pass = prompt("Ingrese contraseña: ");
             string conexion = string.Format("Server={0};Database={1};Uid={2};Pwd={3};"

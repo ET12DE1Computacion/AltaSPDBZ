@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BD\DAOMySQL.cs" />
-    <Compile Include="BD\ECodigosDB.cs" />
     <Compile Include="BD\IDAO.cs" />
     <Compile Include="Modelo\Luchador.cs" />
     <Compile Include="Program.cs" />

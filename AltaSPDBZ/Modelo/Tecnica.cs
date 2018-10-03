@@ -4,7 +4,7 @@ namespace AltaSPDBZ.Modelo
 {
     public class Tecnica
     {
-        public UInt32 IdTecnica { get; set; }
+        public UInt32? IdTecnica { get; set; }
         public String Nombre { get; set; }
         public UInt16 Poder { get; set; }
 
