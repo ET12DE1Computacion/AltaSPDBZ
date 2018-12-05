@@ -43,7 +43,9 @@ namespace AltaSPDBZ
             switch (opcion)
             {
                 case Opciones.AltaLuchador:
-                    dao.altaLuchador(promptLuchador());
+                    Luchador luchador = promptLuchador();
+                    promtEnsenarTecnicas(luchador, dao.traerTecnicas());
+                    dao.altaLuchador(luchador);
                     break;
                 case Opciones.AltaTecnica:
                     dao.altaTecnica(promptTecnica());
@@ -59,6 +61,22 @@ namespace AltaSPDBZ
                 default:
                     break;
             }
+        }
+
+        private static void promtEnsenarTecnicas(Luchador luchador, List<Tecnica> list)
+        {
+            List<Tecnica> tecnicas = new List<Tecnica>();
+            int opcion;
+            do
+            {
+                imprimirTecnicas(list);
+                opcion = Convert.ToInt32(prompt("Seleccionar que tecnica desea aprender"));
+                if (opcion!=-1)
+                {
+                    tecnicas.Add(list[opcion]);
+                }
+            } while (opcion!=-1);
+            luchador.Tecnicas = tecnicas;
         }
 
         private static Opciones leerOpcion()

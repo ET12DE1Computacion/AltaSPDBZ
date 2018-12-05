@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace AltaSPDBZ.BD
 {
-    class DAOMySQL:IDAO
+    class DAOMySQL : IDAO
     {
         MySqlConnection conexion;
         MySqlCommand comando;
@@ -15,7 +15,7 @@ namespace AltaSPDBZ.BD
 
         public DAOMySQL(string cadenaConexion)
         {
-            conexion = new MySqlConnection(cadenaConexion);            
+            conexion = new MySqlConnection(cadenaConexion);
         }
 
         public void altaTecnica(Tecnica tecnica)
@@ -46,7 +46,7 @@ namespace AltaSPDBZ.BD
         {
             cargarParametro(nombre, tipoDb, valor);
             comando.Parameters[nombre].Size = longitud;
-        }        
+        }
 
         public List<Tecnica> traerTecnicas()
         {
@@ -105,7 +105,7 @@ namespace AltaSPDBZ.BD
         }
 
         private delegate T filaA<T>(DataRow fila);
-        
+
         private List<T> tablaA<T>(DataTable tabla, filaA<T> metodoFilaAObjeto)
         {
             List<T> lista = new List<T>();
@@ -134,7 +134,7 @@ namespace AltaSPDBZ.BD
             tecnica.IdTecnica = Convert.ToUInt32(fila["idTecnica"]);
             tecnica.Nombre = fila["nombre"].ToString();
             tecnica.Poder = Convert.ToUInt16(fila["poder"]);
-            
+
             return tecnica;
         }
         public void altaLuchador(Luchador luchador)
@@ -146,8 +146,41 @@ namespace AltaSPDBZ.BD
             cargarParametro("idGenerado", MySqlDbType.UInt32, DBNull.Value);
             setearComoSalida("idGenerado");
             ejecutarComando();
+            luchador.IdLuchador = Convert.ToUInt32(comando.Parameters["idGenerado"].Value);
+            altaLuchadorTecnica(luchador);
         }
 
+        private void altaLuchadorTecnica(Luchador luchador)
+        {
+            if (luchador.Tecnicas.Count!=0)
+            {
+                string query = @"INSERT INTO luchadortecnica (idLuchador, idTecnica) VALUES ";
+                altaTecnicaSiEsNecesario(luchador.Tecnicas[0]);
+                query += cadenaInsertDupla(luchador, luchador.Tecnicas[0]);
+                for (int i = 1; i < luchador.Tecnicas.Count; i++)
+                {
+                    altaTecnicaSiEsNecesario(luchador.Tecnicas[i]);
+                    query = query + ", " + cadenaInsertDupla(luchador, luchador.Tecnicas[i]);
+                }
+                comando = new MySqlCommand(query, conexion);
+                ejecutarComando();
+            }
+            
+        }
+
+        private void altaTecnicaSiEsNecesario(Tecnica tecnica)
+        {
+            if (tecnica.IdTecnica == 0)
+            {
+                altaTecnica(tecnica);
+            }
+        }
+
+        private string cadenaInsertDupla(Luchador l, Tecnica t)
+        {
+            return string.Format("({0}, {1})", l.IdLuchador, t.IdTecnica);
+        }
+       
         private void instanciarComando(string nombreComando)
         {
             comando = new MySqlCommand(nombreComando, conexion);
